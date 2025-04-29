@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -76,19 +77,28 @@ public class Main {
         startGameLoop();
 
     }
+    public static String menu(){
+        System.out.println("Welcome to the game!");
+        System.out.println("[N]ew game/ [E]xit");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.next().toUpperCase();
+    }
 
     public static void startGameLoop() {
-        makeMaskedWord();
-        while (true) {
-            System.out.println("Enter your letter: ");
-            startGame();
-            if (Arrays.equals(word.toCharArray(), maskedWord)) {
-                System.out.println("You won! Word is " + word);
-                break;
-            }
-            if (attempts == 0) {
-                System.out.println("You lose");
-                break;
+        if(Objects.equals(menu(), "N")) {
+            makeMaskedWord();
+            while (true) {
+                System.out.println("Enter your letter: ");
+                startGame();
+                if (Arrays.equals(word.toCharArray(), maskedWord)) {
+                    System.out.println("You won! Word is " + word);
+                    break;
+                }
+                if (attempts == 0) {
+                    System.out.println("You lose");
+                    System.out.println("Word is " + word);
+                    break;
+                }
             }
         }
     }
