@@ -1,10 +1,15 @@
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static final String word = "java";
-    private static final char[] maskedWord = new char[word.length()];
+    private static final String word = getWord();
+    private static final char[] maskedWord = new char[getWord().length()];
     private static int attempts = 6;
     public static final String[] hangmanStages = {
             """
@@ -75,17 +80,18 @@ public class Main {
 
     public static void main(String[] args) {
         startGameLoop();
-
     }
-    public static String menu(){
+
+    public static String startMenu() {
         System.out.println("Welcome to the game!");
-        System.out.println("[N]ew game/ [E]xit");
+        System.out.println("[N]ew game / [E]xit");
         Scanner scanner = new Scanner(System.in);
         return scanner.next().toUpperCase();
     }
 
     public static void startGameLoop() {
-        if(Objects.equals(menu(), "N")) {
+        String input = startMenu();
+        if (input.equals("N")) {
             makeMaskedWord();
             while (true) {
                 System.out.println("Enter your letter: ");
@@ -100,8 +106,12 @@ public class Main {
                     break;
                 }
             }
+        } else if (input.equals("E")) {
+            System.out.println("Exiting...");
+            return;
         }
     }
+
     public static void makeMaskedWord() {
         Arrays.fill(maskedWord, '*');
         System.out.println(maskedWord);
@@ -145,7 +155,7 @@ public class Main {
         if (!checkUserInput(userChar)) {
             attempts--;
             System.out.println(hangmanStages[attempts]);
-            if(attempts==1) System.out.println("You have " + attempts + " attempt");
+            if (attempts == 1) System.out.println("You have " + attempts + " attempt");
             else System.out.println("You have " + attempts + " attempts");
             System.out.println("----------------");
         }
