@@ -152,4 +152,19 @@ public class Main {
         return attempts;
     }
 
+    public static String getWord() {
+        String word;
+        try {
+            List<String> words = Files.readAllLines(Path.of("src/words.txt"))
+                    .stream()
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+            Random random = new Random();
+            word = words.get(random.nextInt(words.size()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return word;
+    }
 }
